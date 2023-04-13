@@ -37,8 +37,8 @@ class NavBar extends HTMLElement {
                 <a class="blog-header-logo text-dark" href="/">Cat Forum</a>
               </div>
               <div class="col-4 d-flex justify-content-end align-items-center">
-                <a class="btn btn-sm btn-outline-secondary mr-2" href="/sign-up">Sign up</a>
-                <a class="btn btn-sm btn-outline-primary mr-2" href="/log-in">Log in</a>
+                <a class="btn btn-sm btn-outline-secondary mr-2" href="/signup">Sign up</a>
+                <a class="btn btn-sm btn-outline-primary mr-2" href="/login">Log in</a>
               </div>
             </div>
           </header>`;

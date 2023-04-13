@@ -21,7 +21,7 @@ const urlRoutes = {
 	
 	},
 	"/login": {
-		template: "<p>login</p>"
+		template: "<log-in></log-in>"
 	}
 };
 
