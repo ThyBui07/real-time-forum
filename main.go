@@ -8,6 +8,7 @@ import (
 	a "server/authentication"
 	d "server/database"
 	u "server/utils"
+	ws "server/websocket"
 )
 
 // func aboutHandler(w http.ResponseWriter, r *http.Request) {
@@ -34,8 +35,8 @@ func Start() error {
 	//read the file from the assets folder
 	http.Handle("/", fs)
 	//handle ws connections
-	manager := NewManager()
-	http.HandleFunc("/ws", manager.serveWS)
+	manager := ws.NewManager()
+	http.HandleFunc("/ws", manager.ServeWS)
 	//handle login- logout
 	http.HandleFunc("/login", a.LogIn)
 	http.HandleFunc("/logout", a.LogOut)

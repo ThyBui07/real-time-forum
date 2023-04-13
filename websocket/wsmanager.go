@@ -1,4 +1,4 @@
-package main
+package websocket
 
 import (
 	"log"
@@ -27,7 +27,7 @@ func NewManager() *Manager {
 }
 
 // serveWS is a HTTP Handler that the has the Manager that allows connections
-func (m *Manager) serveWS(w http.ResponseWriter, r *http.Request) {
+func (m *Manager) ServeWS(w http.ResponseWriter, r *http.Request) {
 
 	log.Println("New connection")
 	// Begin by upgrading the HTTP request
