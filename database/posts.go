@@ -15,6 +15,7 @@ type Post struct {
 	Date         string
 	Categories   string
 	CommentCount int
+	LikesCount  int
 }
 
 //create posts table
@@ -27,6 +28,7 @@ func CreatePostsTable(db *sql.DB) {
 		Date TEXT NOT NULL,
 		Categories TEXT NOT NULL,
 		CommentCount INTEGER NOT NULL DEFAULT 0,
+		LikesCount INTEGER NOT NULL DEFAULT 0,
 		FOREIGN KEY(AuthorID) REFERENCES Users(ID) ON DELETE CASCADE);`
 	query, err := db.Prepare(postsTable)
 	u.CheckErr(err)
@@ -50,7 +52,7 @@ func GetPosts() ([]Post, error) {
 		return nil, err
 	}
 	defer db.Close()
-	rows, err := db.Query("SELECT p.ID, p.AuthorID, u.UserName, p.Title, p.Content, p.Date, p.Categories, p.CommentCount FROM Posts p JOIN Users u ON p.AuthorID = u.id")
+	rows, err := db.Query("SELECT p.ID, p.AuthorID, u.UserName, p.Title, p.Content, p.Date, p.Categories, p.CommentCount, p.LikesCount FROM Posts p JOIN Users u ON p.AuthorID = u.id")
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -60,7 +62,7 @@ func GetPosts() ([]Post, error) {
 	var posts []Post
 	for rows.Next() {
 		var post Post
-		err := rows.Scan(&post.ID, &post.AuthorID, &post.AuthorName, &post.Title, &post.Content, &post.Date, &post.Categories, &post.CommentCount )
+		err := rows.Scan(&post.ID, &post.AuthorID, &post.AuthorName, &post.Title, &post.Content, &post.Date, &post.Categories, &post.CommentCount, &post.LikesCount )
 		if err != nil {
 			return nil, err
 		}
