@@ -7,12 +7,12 @@ import (
 	"net/http"
 	a "server/authentication"
 	d "server/database"
+	posts "server/posts"
 	u "server/utils"
 	ws "server/websocket"
 )
 
 // func aboutHandler(w http.ResponseWriter, r *http.Request) {
-// 	fmt.Println(r.URL.Path)
 // 	fmt.Fprint(w, "About Page")
 // }
 
@@ -21,13 +21,11 @@ var Database *sql.DB
 func init() {
 	fmt.Println("Server init")
 	Database = d.GetDB()
-	fmt.Println("Database:")
 }
 
 func main() {
-
 	err := Start()
-	fmt.Println(err)
+	u.CheckErr(err)
 }
 
 func Start() error {
@@ -40,6 +38,8 @@ func Start() error {
 	//handle login- logout
 	http.HandleFunc("/login", a.LogIn)
 	http.HandleFunc("/logout", a.LogOut)
+	http.HandleFunc("/posts", posts.GetPostsHandler)
+	//http.HandleFunc("/homepage", a.SessionCheck)
 
 	//fire up the server
 	log.Print("Listening on :3000...")
