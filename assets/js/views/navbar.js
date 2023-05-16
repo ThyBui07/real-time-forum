@@ -31,14 +31,7 @@ class NavBar extends HTMLElement {
 			`<header class="blog-header py-3">
             <div class="row flex-nowrap justify-content-between align-items-center">
               <div class="col-4 pt-1">
-                <a class="text-muted" href="#">Let cats alive</a>
-              </div>
-              <div class="col-4 text-center">
                 <a class="blog-header-logo text-dark" href="/">Cat Forum</a>
-              </div>
-              <div class="col-4 d-flex justify-content-end align-items-center">
-                <a class="btn btn-sm btn-outline-secondary mr-2" href="/signup">Sign up</a>
-                <a class="btn btn-sm btn-outline-primary mr-2" href="/login">Log in</a>
               </div>
             </div>
           </header>`;
@@ -47,3 +40,11 @@ class NavBar extends HTMLElement {
 }
 
 customElements.define('nav-bar', NavBar);
+
+
+{/* <div class="col-4 d-flex justify-content-end align-items-center">
+<a class="btn btn-sm btn-outline-secondary mr-2" href="/signup">Sign up</a>
+<a class="btn btn-sm btn-outline-dark mr-2" href="/login">Log in</a>
+<a class="btn btn-sm btn-dark mr-2" href="#">Profile</a>
+
+</div> */}

@@ -1,4 +1,5 @@
 // Extend the HTMLElement class to create the web component
+//if else later for different greetings
 class GreetingMessage extends HTMLElement {
 
 	/**
@@ -29,7 +30,7 @@ class GreetingMessage extends HTMLElement {
 		// Render HTML
 		this.innerHTML =
 			`<p>
-				<button>Hi there!</button>
+				Welcome, !
 			</p>`;
 	}
 
