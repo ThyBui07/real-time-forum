@@ -9,7 +9,7 @@ class Posts extends Observer {
         <h3 class="mb-0">
           <a class="text-dark" href="#">${post.Title}</a>
         </h3>
-        <div class="mb-1 text-muted">${post.Date}</div>
+        <div class="mb-1 text-muted">${post.Date} by ${post.AuthorName}</div>
         <p class="card-text mb-auto">${post.Content}</p>
         <a href="#">Continue reading</a>
       </div>

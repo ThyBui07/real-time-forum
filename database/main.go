@@ -24,7 +24,9 @@ func GetDB() *sql.DB {
 	// err = AddPost(database, 1, "My Favorite Books", "Here are some of my favorite books: 1984, To Kill a Mockingbird, and The Catcher in the Rye.", "2023-04-27", "Books, Literature")
 
 	// err = AddComment(database, "GinP", 1, "This is a great post!")
+
 	//add this every time add comment to update comment count => add postID to AddComment function
+
 	// _, err = database.Exec("UPDATE Posts SET CommentCount = (SELECT COUNT(*) FROM Comments WHERE PostID = ?) WHERE ID = ?", 1, 1)
 	// err = AddComment(database, "NafisahR", 1, "I agree, this post is very insightful.")
 	// _, err = database.Exec("UPDATE Posts SET CommentCount = (SELECT COUNT(*) FROM Comments WHERE PostID = ?) WHERE ID = ?", 1, 1)

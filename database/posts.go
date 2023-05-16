@@ -9,6 +9,7 @@ import (
 type Post struct {
 	ID           int
 	AuthorID     int
+	AuthorName   string
 	Title        string
 	Content      string
 	Date         string
@@ -49,8 +50,9 @@ func GetPosts() ([]Post, error) {
 		return nil, err
 	}
 	defer db.Close()
-	rows, err := db.Query("SELECT * FROM Posts")
+	rows, err := db.Query("SELECT p.ID, p.AuthorID, u.UserName, p.Title, p.Content, p.Date, p.Categories, p.CommentCount FROM Posts p JOIN Users u ON p.AuthorID = u.id")
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -58,10 +60,11 @@ func GetPosts() ([]Post, error) {
 	var posts []Post
 	for rows.Next() {
 		var post Post
-		err := rows.Scan(&post.ID, &post.AuthorID, &post.Title, &post.Content, &post.Date, &post.Categories, &post.CommentCount)
+		err := rows.Scan(&post.ID, &post.AuthorID, &post.AuthorName, &post.Title, &post.Content, &post.Date, &post.Categories, &post.CommentCount )
 		if err != nil {
 			return nil, err
 		}
+		fmt.Println(err)
 		posts = append(posts, post)
 	}
 	if err = rows.Err(); err != nil {
