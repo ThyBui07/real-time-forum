@@ -1,4 +1,4 @@
-console.log('ws')
+//console.log('ws')
 
 window.onload = function () {
 // Apply our listener functions to the submit event on both forms
@@ -8,7 +8,7 @@ window.onload = function () {
 
 // Check if the browser supports WebSocket
     if (window["WebSocket"]) {
-    console.log("supports websockets");
+    //console.log("supports websockets");
      // Connect to websocket
      conn = new WebSocket("ws://" + document.location.host + "/ws");
     } else {
