@@ -21,5 +21,22 @@ func CreateCommentsTable(db *sql.DB) {
 	query, err := db.Prepare(commentsTable)
 	u.CheckErr(err)
 	query.Exec()
-	fmt.Println("Comments created successfully!")
+	fmt.Println("Comments table created successfully!")
+}
+
+func AddComment(db *sql.DB, username string, postID int, content string) error {
+	// Prepare the SQL statement to insert the comment
+	statement, err := db.Prepare("INSERT INTO Comments (Username, PostID, Content) VALUES (?, ?, ?)")
+	if err != nil {
+		return err
+	}
+	defer statement.Close()
+
+	// Execute the SQL statement with the provided parameters
+	_, err = statement.Exec(username, postID, content)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

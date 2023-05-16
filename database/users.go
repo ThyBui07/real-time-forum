@@ -6,17 +6,6 @@ import (
 	u "server/utils"
 )
 
-type User struct {
-	ID        int `json:"-"`
-	FirstName string
-	LastName  string
-	UserName  string
-	Email     string
-	Password  string `json:"-"`
-	Age       int
-	Gender    string
-}
-
 //create users table
 func CreateUsersTable(db *sql.DB) {
 	// Nickname,Age,Gender,First Name,Last Name,E-mail,Password
@@ -37,16 +26,31 @@ func CreateUsersTable(db *sql.DB) {
 }
 
 //add users to users table
-func AddUsers(db *sql.DB, FirstName string, LastName string, UserName string, Email string, Password string, Age int, Gender string) {
+func AddUser(db *sql.DB, FirstName string, LastName string, UserName string, Email string, Password string, Age int, Gender string) error {
 	records := `INSERT INTO users(FirstName, LastName, UserName, Email, Password, Age, Gender) VALUES (?, ?, ?, ?, ?, ?, ?)`
 	query, err := db.Prepare(records)
 	u.CheckErr(err)
 	_, err = query.Exec(FirstName, LastName, UserName, Email, Password, Age, Gender)
-	u.CheckErr(err)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type User struct {
+	ID        int `json:"-"`
+	FirstName string
+	LastName  string
+	UserName  string
+	Email     string
+	Password  string `json:"-"`
+	Age       int
+	Gender    string
 }
 
 //get user by email
 //stmt is a prepared statement in the Go programming language that represents a SQL query that has been prepared and is ready to be executed against a database.
+
 func GetUserByEmail(email string) (*User, error) {
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {

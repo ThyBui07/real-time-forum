@@ -7,6 +7,13 @@ import (
 )
 
 type Post struct {
+	ID           int
+	AuthorID     int
+	Title        string
+	Content      string
+	Date         string
+	Categories   string
+	CommentCount int
 }
 
 //create posts table
@@ -17,8 +24,8 @@ func CreatePostsTable(db *sql.DB) {
 		Title TEXT NOT NULL,
 		Content TEXT NOT NULL,
 		Date TEXT NOT NULL,
-		CategoryIDs TEXT NOT NULL,
 		Categories TEXT NOT NULL,
+		CommentCount INTEGER NOT NULL DEFAULT 0,
 		FOREIGN KEY(AuthorID) REFERENCES Users(ID) ON DELETE CASCADE);`
 	query, err := db.Prepare(postsTable)
 	u.CheckErr(err)
@@ -26,40 +33,48 @@ func CreatePostsTable(db *sql.DB) {
 	fmt.Println("Posts table created successfully!")
 }
 
-//add users to users table
-// func AddUsers(db *sql.DB, FirstName string, LastName string, UserName string, Email string, Password string, Age int, Gender string) {
-// 	records := `INSERT INTO users(FirstName, LastName, UserName, Email, Password, Age, Gender) VALUES (?, ?, ?, ?, ?, ?, ?)`
-// 	query, err := db.Prepare(records)
-// 	u.CheckErr(err)
-// 	_, err = query.Exec(FirstName, LastName, UserName, Email, Password, Age, Gender)
-// 	u.CheckErr(err)
-// }
+//add posts to posts table
+func AddPost(db *sql.DB, authorID int, title string, content string, date string, categories string) error {
+	insertQuery := `INSERT INTO Posts (AuthorID, Title, Content, Date, Categories) VALUES ( ?, ?, ?, ?, ?)`
+	_, err := db.Exec(insertQuery, authorID, title, content, date, categories)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 
-//get user by email
-//stmt is a prepared statement in the Go programming language that represents a SQL query that has been prepared and is ready to be executed against a database.
-// func GetUserByEmail(email string) (*User, error) {
-// 	db, err := sql.Open("sqlite3", "./forum.db")
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	defer db.Close()
+func GetPosts() ([]Post, error) {
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		return nil, err
+	}
+	defer db.Close()
+	rows, err := db.Query("SELECT * FROM Posts")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
 
-// 	stmt, err := db.Prepare("SELECT * FROM users WHERE email = ?")
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	defer stmt.Close()
+	var posts []Post
+	for rows.Next() {
+		var post Post
+		err := rows.Scan(&post.ID, &post.AuthorID, &post.Title, &post.Content, &post.Date, &post.Categories, &post.CommentCount)
+		if err != nil {
+			return nil, err
+		}
+		posts = append(posts, post)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+	return posts, nil
+}
 
-// 	var user User
-// 	err = stmt.QueryRow(email).Scan(&user.ID, &user.FirstName, &user.LastName, &user.UserName, &user.Email, &user.Password, &user.Age, &user.Gender)
-// 	fmt.Println("err from GetUserByEmail: ", err)
-// 	if err != nil {
-// 		if err == sql.ErrNoRows {
-// 			return nil, nil // user not found
-// 		} else {
-// 			return nil, err
-// 		}
-// 	}
+// And here's an example of how you can update the comment count for a post after adding a new comment:
 
-// 	return &user, nil
+// go
+// Copy code
+// _, err = db.Exec("UPDATE Posts SET CommentCount = (SELECT COUNT(*) FROM Comments WHERE PostID = ?) WHERE ID = ?", postID, postID)
+// if err != nil {
+//     return err
 // }
