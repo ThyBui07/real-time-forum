@@ -15,20 +15,20 @@ type Post struct {
 	Date         string
 	Categories   string
 	CommentCount int
-	LikesCount  int
+	LikesCount   int
 }
 
 //create posts table
 func CreatePostsTable(db *sql.DB) {
 	postsTable := `CREATE TABLE IF NOT EXISTS Posts (
-		ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+		PostID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 		AuthorID INTEGER NOT NULL,
 		Title TEXT NOT NULL,
 		Content TEXT NOT NULL,
 		Date TEXT NOT NULL,
 		Categories TEXT NOT NULL,
 		CommentCount INTEGER NOT NULL DEFAULT 0,
-		LikesCount INTEGER NOT NULL DEFAULT 0,
+		PostLikesCount INTEGER NOT NULL DEFAULT 0,
 		FOREIGN KEY(AuthorID) REFERENCES Users(ID) ON DELETE CASCADE);`
 	query, err := db.Prepare(postsTable)
 	u.CheckErr(err)
@@ -62,7 +62,7 @@ func GetPosts() ([]Post, error) {
 	var posts []Post
 	for rows.Next() {
 		var post Post
-		err := rows.Scan(&post.ID, &post.AuthorID, &post.AuthorName, &post.Title, &post.Content, &post.Date, &post.Categories, &post.CommentCount, &post.LikesCount )
+		err := rows.Scan(&post.ID, &post.AuthorID, &post.AuthorName, &post.Title, &post.Content, &post.Date, &post.Categories, &post.CommentCount, &post.LikesCount)
 		if err != nil {
 			return nil, err
 		}
