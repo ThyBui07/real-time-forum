@@ -3,7 +3,8 @@ import Count from "../components/Count.js";
 import Posts from "../components/Posts.js";
 class homePage extends HTMLElement {
 	constructor () {
-		let posts = localStorage.getItem('posts');
+		let posts = []
+		posts = localStorage.getItem('posts');
 		console.log('posts in homepage:', posts)
 		// Always call super first in constructor
 		super();
@@ -49,8 +50,6 @@ class homePage extends HTMLElement {
 				This is the home page
 			</p>
 			<div id="welcome"></div>
-			<div id="posts"></div>
-			<div id="user-count-container"></div>
 			<div id="posts-container"></div>
 			`;
 	}

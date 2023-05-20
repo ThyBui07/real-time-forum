@@ -32,9 +32,6 @@ const urlRoutes = {
 	404: {
 		template: "<p>404 Page Not Found</p>"
 	},
-	"/greet": {
-		template: "<p>Hi there!</p>"
-	},
 	"/": {
 		template: "<home-page></home-page>"
 	},

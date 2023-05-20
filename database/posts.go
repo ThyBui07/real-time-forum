@@ -7,15 +7,15 @@ import (
 )
 
 type Post struct {
-	ID           int
-	AuthorID     int
-	AuthorName   string
-	Title        string
-	Content      string
-	Date         string
-	Categories   string
-	CommentCount int
-	LikesCount   int
+	ID             int
+	AuthorID       int
+	AuthorName     string
+	Title          string
+	Content        string
+	Date           string
+	Categories     string
+	CommentCount   int
+	PostLikesCount int
 }
 
 //create posts table
@@ -52,7 +52,7 @@ func GetPosts() ([]Post, error) {
 		return nil, err
 	}
 	defer db.Close()
-	rows, err := db.Query("SELECT p.ID, p.AuthorID, u.UserName, p.Title, p.Content, p.Date, p.Categories, p.CommentCount, p.LikesCount FROM Posts p JOIN Users u ON p.AuthorID = u.id")
+	rows, err := db.Query("SELECT p.PostID, p.AuthorID, u.UserName, p.Title, p.Content, p.Date, p.Categories, p.CommentCount, p.PostLikesCount FROM Posts p JOIN Users u ON p.AuthorID = u.UserID")
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -62,7 +62,7 @@ func GetPosts() ([]Post, error) {
 	var posts []Post
 	for rows.Next() {
 		var post Post
-		err := rows.Scan(&post.ID, &post.AuthorID, &post.AuthorName, &post.Title, &post.Content, &post.Date, &post.Categories, &post.CommentCount, &post.LikesCount)
+		err := rows.Scan(&post.ID, &post.AuthorID, &post.AuthorName, &post.Title, &post.Content, &post.Date, &post.Categories, &post.CommentCount, &post.PostLikesCount)
 		if err != nil {
 			return nil, err
 		}
@@ -74,12 +74,3 @@ func GetPosts() ([]Post, error) {
 	}
 	return posts, nil
 }
-
-// And here's an example of how you can update the comment count for a post after adding a new comment:
-
-// go
-// Copy code
-// _, err = db.Exec("UPDATE Posts SET CommentCount = (SELECT COUNT(*) FROM Comments WHERE PostID = ?) WHERE ID = ?", postID, postID)
-// if err != nil {
-//     return err
-// }
