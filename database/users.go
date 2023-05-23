@@ -9,7 +9,7 @@ import (
 //create users table
 func CreateUsersTable(db *sql.DB) {
 	// Nickname,Age,Gender,First Name,Last Name,E-mail,Password
-	usersTable := `CREATE TABLE IF NOT EXISTS users (
+	usersTable := `CREATE TABLE IF NOT EXISTS Users (
         UserID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         FirstName TEXT NOT NULL,
         LastName TEXT NOT NULL,

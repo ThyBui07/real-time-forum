@@ -6,8 +6,12 @@ import (
 	"log"
 	"net/http"
 	a "server/authentication"
+	comments "server/comments"
 	d "server/database"
+	likes "server/likes"
 	posts "server/posts"
+	users "server/users"
+
 	u "server/utils"
 	ws "server/websocket"
 )
@@ -39,6 +43,11 @@ func Start() error {
 	http.HandleFunc("/login", a.LogIn)
 	http.HandleFunc("/logout", a.LogOut)
 	http.HandleFunc("/posts", posts.GetPostsHandler)
+	http.HandleFunc("/posts/create", posts.CreatePostHandler)
+	http.HandleFunc("/comments/create", comments.CreateCommentToPost)
+	http.HandleFunc("/likes/create", likes.AddLiketoPostHandler)
+	http.HandleFunc("/users/create", users.CreateUserHandler)
+
 	//http.HandleFunc("/homepage", a.SessionCheck)
 
 	//fire up the server

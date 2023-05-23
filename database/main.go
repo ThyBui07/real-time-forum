@@ -17,6 +17,7 @@ func GetDB() *sql.DB {
 	CreatePostsTable(database)
 	CreatePostLikesTable(database)
 	CreateCommentsTable(database)
+	CreateCommentLikesTable(database)
 	//fake data for testing
 
 	// err = AddUser(database, "Gin", "Phan", "GinP", "gin.phan@gritlab.ax", "abc123", 29, "Female")
@@ -25,14 +26,15 @@ func GetDB() *sql.DB {
 	// err = AddPost(database, 1, "My First Post", "Hello, world!", "2023-04-27", "Programming, Golang")
 	// err = AddPost(database, 1, "My Favorite Books", "Here are some of my favorite books: 1984, To Kill a Mockingbird, and The Catcher in the Rye.", "2023-04-27", "Books, Literature")
 
-	// err = AddComment(database, 1, "GinP", 1, "This is a great post!")
 	// err = AddLikeToPost(database, 1, 2)
-
-	//add this every time add comment to update comment count => add postID to AddComment function
+	// err = AddLikeToPost(database, 2, 2)
 
 	// err = AddComment(database, 2, "NafisahR", 1, "I agree, this post is very insightful.")
-	// err = AddLikeToPost(database, 2, 2)
+	// err = AddComment(database, 1, "GinP", 1, "This is a great post!")
 	// err = AddComment(database, 1, "GinP", 2, "Thanks for sharing this information.")
+
+	// err = AddLikeToComment(database, 2, 2)
+	// err = AddLikeToComment(database, 1, 1)
 
 	u.CheckErr(err)
 	fmt.Println("Fetching records...")

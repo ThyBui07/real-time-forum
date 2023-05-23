@@ -8,8 +8,8 @@ import (
 )
 
 func CreatePostLikesTable(db *sql.DB) {
-	postLikesTable := `CREATE TABLE IF NOT EXISTS Likes (
-		ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	postLikesTable := `CREATE TABLE IF NOT EXISTS PostLikes (
+		PostLikesID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 		UserID INTEGER NOT NULL,
 		PostID INTEGER NOT NULL,
 		FOREIGN KEY(UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
@@ -22,13 +22,13 @@ func CreatePostLikesTable(db *sql.DB) {
 
 func AddLikeToPost(db *sql.DB, userID, postID int) error {
 	// Insert the like into the Likes table
-	insertQuery := "INSERT INTO Likes(UserID, PostID) VALUES(?, ?)"
+	insertQuery := "INSERT INTO PostLikes(UserID, PostID) VALUES(?, ?)"
 	_, err := db.Exec(insertQuery, userID, postID)
 	if err != nil {
 		return err
 	}
 	// Check if the user has already liked the post
-	checkQuery := "SELECT COUNT(*) FROM Likes WHERE UserID = ? AND PostID = ?"
+	checkQuery := "SELECT COUNT(*) FROM PostLikes WHERE UserID = ? AND PostID = ?"
 	var count int
 	err = db.QueryRow(checkQuery, userID, postID).Scan(&count)
 	if err != nil {
@@ -52,7 +52,7 @@ func AddLikeToPost(db *sql.DB, userID, postID int) error {
 
 func RemoveLikeFromPost(db *sql.DB, userID, postID int) error {
 	// Remove the like from the Likes table
-	deleteQuery := "DELETE FROM Likes WHERE UserID = ? AND PostID = ?"
+	deleteQuery := "DELETE FROM PostLikes WHERE UserID = ? AND PostID = ?"
 	_, err := db.Exec(deleteQuery, userID, postID)
 	if err != nil {
 		return err

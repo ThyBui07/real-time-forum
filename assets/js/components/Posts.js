@@ -1,5 +1,5 @@
 import Observer from "../lib/Observer.js";
-console.log('posts.js')
+
 class Posts extends Observer {
   createMarkup(state) {
     const posts = JSON.parse(state.posts);

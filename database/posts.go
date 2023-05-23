@@ -29,7 +29,7 @@ func CreatePostsTable(db *sql.DB) {
 		Categories TEXT NOT NULL,
 		CommentCount INTEGER NOT NULL DEFAULT 0,
 		PostLikesCount INTEGER NOT NULL DEFAULT 0,
-		FOREIGN KEY(AuthorID) REFERENCES Users(ID) ON DELETE CASCADE);`
+		FOREIGN KEY(AuthorID) REFERENCES Users(UserID) ON DELETE CASCADE);`
 	query, err := db.Prepare(postsTable)
 	u.CheckErr(err)
 	query.Exec()
