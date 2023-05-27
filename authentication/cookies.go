@@ -24,13 +24,3 @@ func SessionCheck(w http.ResponseWriter, r *http.Request) bool {
 		return false
 	}
 }
-
-// func GetPosts(w http.ResponseWriter, r *http.Request) {
-//     if SessionCheck(w, r) {
-//         // session is authenticated, proceed with processing the request
-//         // do something here
-//     } else {
-//         // session is not authenticated, SessionCheck already returned an error response
-//         return
-//     }
-// }

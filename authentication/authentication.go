@@ -20,8 +20,8 @@ import (
 var store = sessions.NewCookieStore([]byte("secret-key"))
 
 type UserData struct {
-	User  string
-	Posts []d.Post
+	User string
+	// Posts []d.Post
 }
 
 func LogIn(w http.ResponseWriter, r *http.Request) {
@@ -78,13 +78,13 @@ func LogIn(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, "Failed to encode user", http.StatusInternalServerError)
 				return
 			}
-
-			posts, err := d.GetPosts()
-			data := UserData{
-				User:  string(userJSON),
-				Posts: posts,
-			}
-			jsonData, err := json.Marshal(data)
+			//ko nen, login chi tra ve user
+			// posts, err := d.GetPosts()
+			// data := UserData{
+			// 	User:  string(userJSON),
+			// 	Posts: posts,
+			// }
+			jsonData, err := json.Marshal(userJSON)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
